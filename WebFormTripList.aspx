@@ -86,7 +86,7 @@
                     <ItemStyle Width="50px" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" HorizontalAlign="Center" VerticalAlign="Middle"></ItemStyle>                    
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Time (hours)" ItemStyle-Width="50">
+                <asp:TemplateField HeaderText="Time (Days)" ItemStyle-Width="50">
                     <ItemTemplate>
                         <asp:Label  runat="server" Text='<%# Eval("hours") %>'></asp:Label>
                     </ItemTemplate>

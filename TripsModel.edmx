@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="autoTripsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cars">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="objects">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="trips">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="car_id" Type="int" Nullable="false" />
+          <Property Name="object_form_id" Type="int" Nullable="false" />
+          <Property Name="object_to_id" Type="int" Nullable="false" />
+          <Property Name="date_from" Type="date" />
+          <Property Name="date_to" Type="date" />
+          <Property Name="time" Type="time" Precision="7" />
+        </EntityType>
+        <Association Name="FK_trips_cars">
+          <End Role="cars" Type="Self.cars" Multiplicity="1" />
+          <End Role="trips" Type="Self.trips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cars">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="trips">
+              <PropertyRef Name="car_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_trips_objects">
+          <End Role="objects" Type="Self.objects" Multiplicity="1" />
+          <End Role="trips" Type="Self.trips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="trips">
+              <PropertyRef Name="object_form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_trips_objects1">
+          <End Role="objects" Type="Self.objects" Multiplicity="1" />
+          <End Role="trips" Type="Self.trips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="trips">
+              <PropertyRef Name="object_to_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="autoTripsModelStoreContainer">
+          <EntitySet Name="cars" EntityType="Self.cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="objects" EntityType="Self.objects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="trips" EntityType="Self.trips" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_trips_cars" Association="Self.FK_trips_cars">
+            <End Role="cars" EntitySet="cars" />
+            <End Role="trips" EntitySet="trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_trips_objects" Association="Self.FK_trips_objects">
+            <End Role="objects" EntitySet="objects" />
+            <End Role="trips" EntitySet="trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_trips_objects1" Association="Self.FK_trips_objects1">
+            <End Role="objects" EntitySet="objects" />
+            <End Role="trips" EntitySet="trips" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="autoTripsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="car">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="trips" Relationship="Self.FK_trips_cars" FromRole="cars" ToRole="trips" />
+        </EntityType>
+        <EntityType Name="object">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="trips" Relationship="Self.FK_trips_objects" FromRole="objects" ToRole="trips" />
+          <NavigationProperty Name="trips1" Relationship="Self.FK_trips_objects1" FromRole="objects" ToRole="trips" />
+        </EntityType>
+        <EntityType Name="trip">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="car_id" Type="Int32" Nullable="false" />
+          <Property Name="object_form_id" Type="Int32" Nullable="false" />
+          <Property Name="object_to_id" Type="Int32" Nullable="false" />
+          <Property Name="date_from" Type="DateTime" Precision="0" />
+          <Property Name="date_to" Type="DateTime" Precision="0" />
+          <Property Name="time" Type="Time" Precision="7" />
+          <NavigationProperty Name="car" Relationship="Self.FK_trips_cars" FromRole="trips" ToRole="cars" />
+          <NavigationProperty Name="object" Relationship="Self.FK_trips_objects" FromRole="trips" ToRole="objects" />
+          <NavigationProperty Name="object1" Relationship="Self.FK_trips_objects1" FromRole="trips" ToRole="objects" />
+        </EntityType>
+        <Association Name="FK_trips_cars">
+          <End Role="cars" Type="Self.car" Multiplicity="1" />
+          <End Role="trips" Type="Self.trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cars">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="trips">
+              <PropertyRef Name="car_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_trips_objects">
+          <End Role="objects" Type="Self.object" Multiplicity="1" />
+          <End Role="trips" Type="Self.trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="trips">
+              <PropertyRef Name="object_form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_trips_objects1">
+          <End Role="objects" Type="Self.object" Multiplicity="1" />
+          <End Role="trips" Type="Self.trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="trips">
+              <PropertyRef Name="object_to_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="autoTripsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cars" EntityType="Self.car" />
+          <EntitySet Name="objects" EntityType="Self.object" />
+          <EntitySet Name="trips" EntityType="Self.trip" />
+          <AssociationSet Name="FK_trips_cars" Association="Self.FK_trips_cars">
+            <End Role="cars" EntitySet="cars" />
+            <End Role="trips" EntitySet="trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_trips_objects" Association="Self.FK_trips_objects">
+            <End Role="objects" EntitySet="objects" />
+            <End Role="trips" EntitySet="trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_trips_objects1" Association="Self.FK_trips_objects1">
+            <End Role="objects" EntitySet="objects" />
+            <End Role="trips" EntitySet="trips" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="autoTripsModelStoreContainer" CdmEntityContainer="autoTripsEntities">
+          <EntitySetMapping Name="cars">
+            <EntityTypeMapping TypeName="autoTripsModel.car">
+              <MappingFragment StoreEntitySet="cars">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="objects">
+            <EntityTypeMapping TypeName="autoTripsModel.object">
+              <MappingFragment StoreEntitySet="objects">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="trips">
+            <EntityTypeMapping TypeName="autoTripsModel.trip">
+              <MappingFragment StoreEntitySet="trips">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="car_id" ColumnName="car_id" />
+                <ScalarProperty Name="object_form_id" ColumnName="object_form_id" />
+                <ScalarProperty Name="object_to_id" ColumnName="object_to_id" />
+                <ScalarProperty Name="date_from" ColumnName="date_from" />
+                <ScalarProperty Name="date_to" ColumnName="date_to" />
+                <ScalarProperty Name="time" ColumnName="time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -18,24 +18,25 @@ namespace Lab_3.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Insert", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        bool Insert(string car_id, string obj_from_id, string obj_to_id, string date_from, string date_to);
+        bool Insert(string car_id, string obj_from_id, string obj_to_id, System.DateTime date_from, System.DateTime date_to);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Insert", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> InsertAsync(string car_id, string obj_from_id, string obj_to_id, string date_from, string date_to);
+        System.Threading.Tasks.Task<bool> InsertAsync(string car_id, string obj_from_id, string obj_to_id, System.DateTime date_from, System.DateTime date_to);
         
+        // CODEGEN: Parameter 'dateFrom' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetData", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.Data.DataTable GetData(string dateFrom, string dateTo);
+        Lab_3.ServiceReference1.GetDataResponse GetData(Lab_3.ServiceReference1.GetDataRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetData", ReplyAction="*")]
-        System.Threading.Tasks.Task<System.Data.DataTable> GetDataAsync(string dateFrom, string dateTo);
+        System.Threading.Tasks.Task<Lab_3.ServiceReference1.GetDataResponse> GetDataAsync(Lab_3.ServiceReference1.GetDataRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Delete", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void Delete(string id);
+        void Delete(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Delete", ReplyAction="*")]
-        System.Threading.Tasks.Task DeleteAsync(string id);
+        System.Threading.Tasks.Task DeleteAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSelectData", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -43,6 +44,46 @@ namespace Lab_3.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetSelectData", ReplyAction="*")]
         System.Threading.Tasks.Task<System.Data.DataTable> GetSelectDataAsync(string tableName);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetData", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetDataRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> dateFrom;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> dateTo;
+        
+        public GetDataRequest() {
+        }
+        
+        public GetDataRequest(System.Nullable<System.DateTime> dateFrom, System.Nullable<System.DateTime> dateTo) {
+            this.dateFrom = dateFrom;
+            this.dateTo = dateTo;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDataResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetDataResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public System.Data.DataTable GetDataResult;
+        
+        public GetDataResponse() {
+        }
+        
+        public GetDataResponse(System.Data.DataTable GetDataResult) {
+            this.GetDataResult = GetDataResult;
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -72,27 +113,44 @@ namespace Lab_3.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public bool Insert(string car_id, string obj_from_id, string obj_to_id, string date_from, string date_to) {
+        public bool Insert(string car_id, string obj_from_id, string obj_to_id, System.DateTime date_from, System.DateTime date_to) {
             return base.Channel.Insert(car_id, obj_from_id, obj_to_id, date_from, date_to);
         }
         
-        public System.Threading.Tasks.Task<bool> InsertAsync(string car_id, string obj_from_id, string obj_to_id, string date_from, string date_to) {
+        public System.Threading.Tasks.Task<bool> InsertAsync(string car_id, string obj_from_id, string obj_to_id, System.DateTime date_from, System.DateTime date_to) {
             return base.Channel.InsertAsync(car_id, obj_from_id, obj_to_id, date_from, date_to);
         }
         
-        public System.Data.DataTable GetData(string dateFrom, string dateTo) {
-            return base.Channel.GetData(dateFrom, dateTo);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Lab_3.ServiceReference1.GetDataResponse Lab_3.ServiceReference1.WebService1Soap.GetData(Lab_3.ServiceReference1.GetDataRequest request) {
+            return base.Channel.GetData(request);
         }
         
-        public System.Threading.Tasks.Task<System.Data.DataTable> GetDataAsync(string dateFrom, string dateTo) {
-            return base.Channel.GetDataAsync(dateFrom, dateTo);
+        public System.Data.DataTable GetData(System.Nullable<System.DateTime> dateFrom, System.Nullable<System.DateTime> dateTo) {
+            Lab_3.ServiceReference1.GetDataRequest inValue = new Lab_3.ServiceReference1.GetDataRequest();
+            inValue.dateFrom = dateFrom;
+            inValue.dateTo = dateTo;
+            Lab_3.ServiceReference1.GetDataResponse retVal = ((Lab_3.ServiceReference1.WebService1Soap)(this)).GetData(inValue);
+            return retVal.GetDataResult;
         }
         
-        public void Delete(string id) {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Lab_3.ServiceReference1.GetDataResponse> Lab_3.ServiceReference1.WebService1Soap.GetDataAsync(Lab_3.ServiceReference1.GetDataRequest request) {
+            return base.Channel.GetDataAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Lab_3.ServiceReference1.GetDataResponse> GetDataAsync(System.Nullable<System.DateTime> dateFrom, System.Nullable<System.DateTime> dateTo) {
+            Lab_3.ServiceReference1.GetDataRequest inValue = new Lab_3.ServiceReference1.GetDataRequest();
+            inValue.dateFrom = dateFrom;
+            inValue.dateTo = dateTo;
+            return ((Lab_3.ServiceReference1.WebService1Soap)(this)).GetDataAsync(inValue);
+        }
+        
+        public void Delete(int id) {
             base.Channel.Delete(id);
         }
         
-        public System.Threading.Tasks.Task DeleteAsync(string id) {
+        public System.Threading.Tasks.Task DeleteAsync(int id) {
             return base.Channel.DeleteAsync(id);
         }
         

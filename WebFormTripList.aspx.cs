@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -19,11 +20,13 @@ namespace Lab_3
             }
         }
 
+        private DateTime ParseDate(string date) => DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
         protected void GetData_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(dateFrom.Text) && !string.IsNullOrEmpty(dateTo.Text) && DateTime.Parse(dateFrom.Text) < DateTime.Parse(dateTo.Text))
             {
-                GridView1.DataSource = service.GetData(dateFrom.Text, dateTo.Text);
+                GridView1.DataSource = service.GetData(ParseDate(dateFrom.Text), ParseDate(dateTo.Text));
                 GridView1.DataBind();
             }
             else
@@ -40,7 +43,7 @@ namespace Lab_3
                 if (cb != null && cb.Checked)
                 {
                     var id = cb.Attributes["data-value"].ToString();
-                    service.Delete(id);
+                    service.Delete(int.Parse(id));
                 }
             }
 

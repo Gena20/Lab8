@@ -51,7 +51,7 @@ namespace Lab_3
             {
                 ObjLabel.Visible = true;
             }
-            var res = service.Insert(car_id, obj_from_id, obj_to_id, date_from, date_to);
+            var res = service.Insert(car_id, obj_from_id, obj_to_id, DateTime.Parse(date_from), DateTime.Parse(date_to));
 
             if (res) Response.Redirect("/WebFormTripList.aspx");
 
